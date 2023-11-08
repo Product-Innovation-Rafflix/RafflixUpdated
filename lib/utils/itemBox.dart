@@ -21,30 +21,40 @@ class _boxState extends State<box> {
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding: EdgeInsets.all(15),
-        child: Row(children: [
-          Image.asset("assets/images/shop.png"),
-          Container(
-            width: 195.w,
-            height: 90.h,
-            child: Padding(
-              padding: EdgeInsets.only(top: 10, left: 10, bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.itemBox.itemName,
-                    style: TextStyle(
-                      fontSize: 16.r,
-                      fontWeight: FontWeight.bold,
+        child: Row(
+          children: [
+            Image.asset("assets/images/shop.png"),
+            SizedBox(width: 15.w),
+            Flexible(
+              child: Container(
+                height: 90.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.itemBox.itemName,
+                      style: TextStyle(
+                        fontSize: 16.r,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Spacer(),
-                  Text(widget.itemBox.details),
-                ],
+                    SizedBox(height: 10.h),
+                    Flexible(
+                      child: Text(
+                        widget.itemBox.details,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        ]),
+            )
+          ],
+        ),
       ),
     );
   }

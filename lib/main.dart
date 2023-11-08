@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             //           itemName!); // Use the null-aware operator to ensure the value is not null
             // },
             '/admin': (context) => admin(),
-            '/shop': (context) => shop(),
+            '/shop': (context) => Shop(),
             '/profile': (context) => profile(),
             // '/signin': (context) => const SignIn(),
             // '/signup': (context) => const SignUp(),

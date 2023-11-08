@@ -45,7 +45,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
           ),
           GestureDetectorButton(
             icon: Icons.store_rounded,
-            route: '/items',
+            route: '/shop',
             isSelected: widget.currentIndex == 1,
           ),
           GestureDetectorButton(
