@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafflix/screens/browse.dart';
 import 'package:rafflix/theme.dart';
 import 'package:rafflix/screens/admin.dart';
 import 'package:rafflix/screens/home.dart';

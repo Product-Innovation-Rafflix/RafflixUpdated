@@ -50,7 +50,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
           ),
           GestureDetectorButton(
             icon: Icons.heart_broken,
-            route: '/signup',
+            route: '/admin',
             isSelected: widget.currentIndex == 2,
           ),
           GestureDetectorButton(
