@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafflix/screens/browse.dart';
+import 'package:rafflix/screens/ticketChoose.dart';
 import 'package:rafflix/theme.dart';
 import 'package:rafflix/screens/admin.dart';
 import 'package:rafflix/screens/home.dart';
@@ -29,19 +30,21 @@ class MyApp extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => Home(),
-
-            // '/item': (context) {
-            //   final String? itemName =
-            //       ModalRoute.of(context)!.settings.arguments as String?;
-            //   return ItemDetails(
-            //       itemName:
-            //           itemName!); // Use the null-aware operator to ensure the value is not null
-            // },
             '/admin': (context) => admin(),
+            '/tickets': (context) {
+              final Map<String, dynamic>? args = ModalRoute.of(context)!
+                  .settings
+                  .arguments as Map<String, dynamic>?;
+
+              if (args != null) {
+                return TicketChoose(itemName: args['itemName'] as String);
+              } else {
+                // Handle the case where args is null
+                return TicketChoose(itemName: "DefaultItem");
+              }
+            },
             '/shop': (context) => Shop(),
             '/profile': (context) => profile(),
-            // '/signin': (context) => const SignIn(),
-            // '/signup': (context) => const SignUp(),
           },
         );
       },
