@@ -262,19 +262,19 @@ class _ItemDetailsState extends State<TicketChoose>
                         Text(
                           "iPhone 15 Pro Max",
                           style: TextStyle(
-                              fontSize: 30.r, fontWeight: FontWeight.w800),
+                              fontSize: 28.r, fontWeight: FontWeight.w800),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 5.h,
                     ),
                     Row(
                       children: [
                         Text(
                           "5000 Ks / Tickets",
                           style: TextStyle(
-                            fontSize: 20.r,
+                            fontSize: 18.r,
                             fontWeight: FontWeight.w800,
                             color: Colors.black54,
                           ),
@@ -282,7 +282,7 @@ class _ItemDetailsState extends State<TicketChoose>
                       ],
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 5.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -290,7 +290,7 @@ class _ItemDetailsState extends State<TicketChoose>
                         Text(
                           "Select Your Ticket",
                           style: TextStyle(
-                              fontSize: 20.r, fontWeight: FontWeight.w800),
+                              fontSize: 18.r, fontWeight: FontWeight.w800),
                         ),
                         Text(
                           "$trueValuesCount Tickets Left",
@@ -310,7 +310,7 @@ class _ItemDetailsState extends State<TicketChoose>
                       ),
                     ),
                     SizedBox(
-                      height: 15.h,
+                      height: 10.h,
                     ),
                   ],
                 ),
