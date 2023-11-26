@@ -22,7 +22,10 @@ class ItemWidget extends StatelessWidget {
         Navigator.pushNamed(
           context,
           '/tickets',
-          arguments: {'itemName': currentItem.itemName},
+          arguments: {
+            'itemName': currentItem.itemName,
+            'price': currentItem.price,
+          },
         );
       },
       child: Container(

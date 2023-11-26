@@ -12,9 +12,11 @@ import '../utils/slideWidgetForTicketChoose.dart';
 // import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class TicketChoose extends StatefulWidget {
-  final String itemName; // Add this line
+  final String itemName;
+  final int price;
 
-  const TicketChoose({Key? key, required this.itemName}) : super(key: key);
+  const TicketChoose({Key? key, required this.itemName, required this.price})
+      : super(key: key);
 
   static Map<String, String> itemAssetMap = {
     'Item-1': 'assets/images/house.jpg',
@@ -23,7 +25,7 @@ class TicketChoose extends StatefulWidget {
     // Add more items as needed
   };
   @override
-  State<TicketChoose> createState() => _ItemDetailsState();
+  State<TicketChoose> createState() => _ItemDetailsState(itemPrice: price);
 }
 
 class _ItemDetailsState extends State<TicketChoose>
@@ -31,6 +33,9 @@ class _ItemDetailsState extends State<TicketChoose>
   // late IO.Socket socket;
   late AnimationController _buttonController;
   late Animation<double> _buttonScale;
+  final int itemPrice;
+
+  _ItemDetailsState({required this.itemPrice});
   List<Map> mydata = [
     {"key": "Item-1:1", "value": "false"},
     {"key": "Item-1:2", "value": "false"},
@@ -272,7 +277,7 @@ class _ItemDetailsState extends State<TicketChoose>
                     Row(
                       children: [
                         Text(
-                          "5000 Ks / Tickets",
+                          "$itemPrice Tickets",
                           style: TextStyle(
                             fontSize: 18.r,
                             fontWeight: FontWeight.w800,
@@ -351,91 +356,103 @@ class _ItemDetailsState extends State<TicketChoose>
       ),
     );
   }
-}
 
-Future<bool> showCustomDialog(
-    BuildContext context, List<Map> selectedItems) async {
-  bool? result = await showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Row(
-          children: [
-            Icon(
-              Icons.warning,
-              color: Colors.red,
-              size: 40.r,
-            ),
-            SizedBox(width: 10.h),
-            Text(
-              'အတည်ပြုပါ။',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.r),
-            ),
-          ],
-        ),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'You have selected the following Ticket Numbers:',
-              style: TextStyle(color: Colors.black),
-            ),
-            SizedBox(height: 10.h),
-            for (var item in selectedItems)
-              Text(
-                'Ticket Number: ${item['key'].split(':')[1]}',
-                style: TextStyle(color: Colors.black),
-              ),
-            SizedBox(
-              height: 2.h,
-            )
-          ],
-        ),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+  Future<bool> showCustomDialog(
+      BuildContext context, List<Map> selectedItems) async {
+    int lengthOfList = selectedItems.length;
+    int totalCost = itemPrice * lengthOfList;
+    bool? result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
             children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.green.shade400)),
-                onPressed: () {
-                  Navigator.of(context)
-                      .pop(false); // Close the dialog with false
-                },
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.white),
-                ),
+              Icon(
+                Icons.warning,
+                color: Colors.red,
+                size: 40.r,
               ),
-              SizedBox(
-                width: 15.w,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true); // Close the dialog with true
-                },
-                child: Text(
-                  'Confirm',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.red)),
+              SizedBox(width: 10.h),
+              Text(
+                'အတည်ပြုပါ။',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.r),
               ),
             ],
           ),
-        ],
-      );
-    },
-  );
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "You have selected $lengthOfList Tickets: ",
+                  style: const TextStyle(color: Colors.black),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  'Total Cost: $totalCost Ks', // Display total cost
+                  style: const TextStyle(color: Colors.black),
+                ),
+                SizedBox(height: 10.h),
+                for (var item in selectedItems)
+                  Text(
+                    'Ticket Number: ${item['key'].split(':')[1]}',
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                SizedBox(
+                  height: 2.h,
+                )
+              ],
+            ),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.green.shade400)),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pop(false); // Close the dialog with false
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  width: 15.w,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pop(true); // Close the dialog with true
+                  },
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red)),
+                  child: const Text(
+                    'Confirm',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
 
-  return result ?? false; // Return false if the dialog is dismissed
+    return result ?? false; // Return false if the dialog is dismissed
+  }
 }
