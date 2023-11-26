@@ -168,10 +168,10 @@ class _ShopState extends State<Shop> with SingleTickerProviderStateMixin {
               children: <Widget>[
                 const Gap(20),
                 const Text(
-                  'Shop',
+                  'ဈေးဆိုင်များ',
                   style: TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 36,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

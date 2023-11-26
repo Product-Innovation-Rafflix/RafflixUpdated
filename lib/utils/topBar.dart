@@ -10,7 +10,7 @@ class topBar extends StatelessWidget {
     return DefaultTabController(
       length: 1,
       child: Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 2),
         child: Center(
           child: Align(
             alignment: Alignment.centerRight,
@@ -38,7 +38,7 @@ class topBar extends StatelessWidget {
                         SizedBox(
                           height: 30.h,
                           width: 30.w,
-                          child: const Icon(
+                          child: Icon(
                             Icons.account_balance_wallet_rounded,
                             color: Colors.white,
                           ),
@@ -47,7 +47,7 @@ class topBar extends StatelessWidget {
                           '$balance R',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -58,19 +58,13 @@ class topBar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 15.w,
+                    width: 20.w,
                   ),
-                  Icon(
-                    Icons.notifications_none_outlined,
-                    size: 24.r,
-                  ),
+                  Icon(Icons.notifications_outlined),
                   SizedBox(
-                    width: 15.w,
+                    width: 20.w,
                   ),
-                  Icon(
-                    Icons.shopping_bag_outlined,
-                    size: 24.r,
-                  ),
+                  Icon(Icons.shopping_bag_outlined),
                   SizedBox(
                     width: 5.w,
                   ),
