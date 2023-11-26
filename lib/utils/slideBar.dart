@@ -35,7 +35,7 @@ class _homePageSliderState extends State<homePageSlider> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 30.h),
+        SizedBox(height: 20.h),
         CarouselSlider.builder(
           itemCount: carruselImages.length,
           itemBuilder: (context, index, realIndex) {

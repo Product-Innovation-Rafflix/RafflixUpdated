@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 15.h, right: 20.w, left: 20.w),
+            padding: EdgeInsets.only(top: 10.h, right: 20.w, left: 20.w),
             child: Column(children: [SearchBar()]),
           ),
           homePageSlider(),
@@ -75,14 +75,15 @@ class _HomeState extends State<Home> {
             filterItems: filterItems,
             selectedCategory: selectedCategory,
           ),
-          Gap(20.h),
+          Gap(10.h),
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: filteredItemBoxes.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsets.all(20),
+                padding:
+                    EdgeInsets.only(top: 10, right: 15, left: 15, bottom: 10),
                 child: box(itemBox: filteredItemBoxes[index]),
               );
             },
@@ -111,7 +112,7 @@ class SearchBar extends StatelessWidget {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                    hintText: "Search...", border: InputBorder.none),
+                    hintText: "ရှာဖွေပါ...", border: InputBorder.none),
               ),
             ),
             Icon(Icons.search)
@@ -138,24 +139,24 @@ class _Categories extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
-            Gap(20.w),
+            Gap(15.w),
             _Category(
               icon: Icons.window,
-              text: "All",
+              text: "အားလုံး",
               filterItems: filterItems,
               isSelected: selectedCategory == "All",
             ),
             Gap(20.w),
             _Category(
               icon: Icons.coffee_rounded,
-              text: "Fashion",
+              text: "ဖက်ရှင်",
               filterItems: filterItems,
               isSelected: selectedCategory == "Fashion",
             ),
             Gap(20.w),
             _Category(
               icon: Icons.smart_toy,
-              text: "Electronics",
+              text: "အီလက်ထရောနစ်",
               filterItems: filterItems,
               isSelected: selectedCategory == "Electronics",
             ),
@@ -166,7 +167,7 @@ class _Categories extends StatelessWidget {
               filterItems: filterItems,
               isSelected: selectedCategory == "Beauty",
             ),
-            Gap(20.w),
+            Gap(15.w),
           ],
         ),
       ),

@@ -37,15 +37,15 @@ class _ItemDetailsState extends State<TicketChoose>
 
   _ItemDetailsState({required this.itemPrice});
   List<Map> mydata = [
-    {"key": "Item-1:1", "value": "true"},
-    {"key": "Item-1:2", "value": "true"},
-    {"key": "Item-1:3", "value": "true"},
-    {"key": "Item-1:4", "value": "true"},
-    {"key": "Item-1:5", "value": "true"},
-    {"key": "Item-1:6", "value": "true"},
-    {"key": "Item-1:7", "value": "true"},
-    {"key": "Item-1:8", "value": "true"},
-    {"key": "Item-1:9", "value": "true"},
+    {"key": "Item-1:1", "value": "false"},
+    {"key": "Item-1:2", "value": "false"},
+    {"key": "Item-1:3", "value": "false"},
+    {"key": "Item-1:4", "value": "false"},
+    {"key": "Item-1:5", "value": "false"},
+    {"key": "Item-1:6", "value": "false"},
+    {"key": "Item-1:7", "value": "false"},
+    {"key": "Item-1:8", "value": "false"},
+    {"key": "Item-1:9", "value": "false"},
     {"key": "Item-1:10", "value": "true"},
     {"key": "Item-1:11", "value": "true"},
     {"key": "Item-1:12", "value": "true"},
@@ -267,19 +267,19 @@ class _ItemDetailsState extends State<TicketChoose>
                         Text(
                           "iPhone 15 Pro Max",
                           style: TextStyle(
-                              fontSize: 30.r, fontWeight: FontWeight.w800),
+                              fontSize: 28.r, fontWeight: FontWeight.w800),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 5.h,
                     ),
                     Row(
                       children: [
                         Text(
                           "$itemPrice Tickets",
                           style: TextStyle(
-                            fontSize: 20.r,
+                            fontSize: 18.r,
                             fontWeight: FontWeight.w800,
                             color: Colors.black54,
                           ),
@@ -287,7 +287,7 @@ class _ItemDetailsState extends State<TicketChoose>
                       ],
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 5.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,7 +295,7 @@ class _ItemDetailsState extends State<TicketChoose>
                         Text(
                           "Select Your Ticket",
                           style: TextStyle(
-                              fontSize: 20.r, fontWeight: FontWeight.w800),
+                              fontSize: 18.r, fontWeight: FontWeight.w800),
                         ),
                         Text(
                           "$trueValuesCount Tickets Left",
@@ -315,7 +315,7 @@ class _ItemDetailsState extends State<TicketChoose>
                       ),
                     ),
                     SizedBox(
-                      height: 15.h,
+                      height: 10.h,
                     ),
                   ],
                 ),

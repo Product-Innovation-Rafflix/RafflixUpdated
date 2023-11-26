@@ -39,22 +39,22 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetectorButton(
-            icon: Icons.auto_awesome_mosaic_sharp,
+            icon: Icons.dashboard_outlined,
             route: '/',
             isSelected: widget.currentIndex == 0,
           ),
           GestureDetectorButton(
-            icon: Icons.store_rounded,
+            icon: Icons.store_outlined,
             route: '/shop',
             isSelected: widget.currentIndex == 1,
           ),
           GestureDetectorButton(
-            icon: Icons.heart_broken,
-            route: '/signin',
+            icon: Icons.currency_exchange_outlined,
+            route: '/admin',
             isSelected: widget.currentIndex == 2,
           ),
           GestureDetectorButton(
-            icon: Icons.person_2_rounded,
+            icon: Icons.person_2_outlined,
             route: '/profile',
             isSelected: widget.currentIndex == 3,
           )
