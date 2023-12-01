@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rafflix/screens/browse.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'package:rafflix/screens/admin.dart';
 import 'package:rafflix/screens/createNewPassword.dart';
+import 'package:rafflix/screens/home.dart';
 import 'package:rafflix/screens/logIn.dart';
+import 'package:rafflix/screens/profile.dart';
 import 'package:rafflix/screens/resetPassword.dart';
+import 'package:rafflix/screens/shop.dart';
+import 'package:rafflix/controllers/auth_service.dart';
 import 'package:rafflix/screens/signUp.dart';
 import 'package:rafflix/screens/ticketChoose.dart';
 import 'package:rafflix/theme.dart';
-import 'package:rafflix/screens/admin.dart';
-import 'package:rafflix/screens/home.dart';
-import 'package:rafflix/screens/profile.dart';
-import 'package:rafflix/screens/shop.dart';
-import 'package:rafflix/controllers/auth_service.dart'; // Import the AuthService
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late Future<bool> _authFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _authFuture = AuthService.isAuthenticated();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -32,7 +46,7 @@ class MyApp extends StatelessWidget {
               background: bgColor,
             ),
           ),
-          home: AuthChecker(), // Use AuthChecker as the home widget
+          home: AuthHandler(authFuture: _authFuture),
           routes: {
             '/admin': (context) => admin(),
             '/tickets': (context) {
@@ -51,7 +65,6 @@ class MyApp extends StatelessWidget {
             },
             '/shop': (context) => Shop(),
             '/profile': (context) => Profile(),
-            '/signin': (context) => SignIn(),
             '/signup': (context) => SignUp(),
             '/reset': (context) => ResetPass(),
             '/create': (context) => CreateNewPassword(),
@@ -62,23 +75,92 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AuthChecker extends StatelessWidget {
+class AuthHandler extends StatelessWidget {
+  final Future<bool> authFuture;
+
+  const AuthHandler({Key? key, required this.authFuture}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
-      future: AuthService
-          .isAuthenticated(), // Implement a method to check authentication
+      future: authFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Scaffold(
+            body: Center(
+              child: SpinKitFadingCube(
+                color: Theme.of(context).primaryColor, // Change color as needed
+                size: 50.0,
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(body: Text('Error: ${snapshot.error}'));
         } else {
-          if (snapshot.data == true) {
+          final isAuthenticated = snapshot.data;
+
+          if (isAuthenticated == true) {
             return Home();
           } else {
-            return SignIn();
+            return FutureBuilder<bool>(
+              future: Future.delayed(Duration(seconds: 2), () => false),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    body: Center(
+                      child: SpinKitFadingCube(
+                        color: Theme.of(context)
+                            .primaryColor, // Change color as needed
+                        size: 50.0,
+                      ),
+                    ),
+                  );
+                } else {
+                  return AuthenticationScreen();
+                }
+              },
+            );
           }
         }
       },
+    );
+  }
+}
+
+class AuthenticationScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Authentication'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignIn()),
+                );
+              },
+              child: Text('Sign In'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Replace with the navigation to the sign-up screen
+                // Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUp()),
+                // );
+              },
+              child: Text('Sign Up'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
