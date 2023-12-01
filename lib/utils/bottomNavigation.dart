@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafflix/theme.dart';
 // import 'package:rafflix/utils/GetStoredCookie.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
@@ -25,7 +26,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
     return Container(
       height: 60.h,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: bgColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -87,7 +88,7 @@ class GestureDetectorButton extends StatelessWidget {
       child: SizedBox(
           height: 60.h,
           child: Icon(icon,
-              size: 28.r, color: isSelected ? Colors.black : Colors.grey)),
+              size: 24.r, color: isSelected ? Colors.black : Colors.grey)),
     );
   }
 }
