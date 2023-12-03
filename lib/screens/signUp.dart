@@ -172,6 +172,7 @@ class _SignUpState extends State<SignUp> {
                               }
                               if (validate) {
                                 CreateAccount(
+                                    context,
                                     nameController.text,
                                     phoneController.text,
                                     passwordController.text);
@@ -229,7 +230,8 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
-CreateAccount(name, phone, password) async {
+CreateAccount(
+    BuildContext context, String name, String phone, String password) async {
   var url = "https://rafflixbackgroundsevice.onrender.com/api/signup";
   final response = await http.post(
     Uri.parse(url),
@@ -237,16 +239,29 @@ CreateAccount(name, phone, password) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'name': name, 'phone': phone, 'password': password}),
+      <String, String>{'name': name, 'phone': phone, 'password': password},
+    ),
   );
 
   if (response.statusCode == 200) {
-    print(response.body);
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
+    // Parse the JSON response if needed
+    Map<String, dynamic> responseData = jsonDecode(response.body);
+    print(responseData);
+
+    // Show a success message to the user
+    final snackBar = SnackBar(content: Text('Sign Up Successful'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    // Direct the user to the login screen
+    Navigator.pushNamed(context, '/signin');
   } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create album.');
+    // If the server did not return a 200 OK response,
+    // show an error message to the user
+    final snackBar = SnackBar(content: Text('Failed to create account'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    // If needed, you can log the error details
+    print('Failed to create account. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
   }
 }

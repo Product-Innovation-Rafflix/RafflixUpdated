@@ -227,7 +227,10 @@ class _ItemDetailsState extends State<TicketChoose>
     String assetPath = TicketChoose.itemAssetMap[widget.itemName] ??
         'assets/images/iPhone15ProMax.jpg';
     return Scaffold(
-      appBar: AppBar(title: topBar()),
+      appBar: AppBar(
+        title: topBar(),
+        backgroundColor: bgColor,
+      ),
       body: Container(
         width: double.maxFinite,
         height: double.maxFinite,

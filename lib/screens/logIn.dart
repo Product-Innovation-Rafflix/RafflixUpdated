@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafflix/theme.dart';
 import 'package:rafflix/utils/TextField.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class SignIn extends StatefulWidget {
@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
   }
 
   // ignore: non_constant_identifier_names
-  Future<void> LoginAccount(String phone, String password) async {
+  Future<bool> LoginAccount(String phone, String password) async {
     var url = "https://rafflixbackgroundsevice.onrender.com/api/logIn";
     final response = await http.post(
       Uri.parse(url),
@@ -45,25 +45,22 @@ class _SignInState extends State<SignIn> {
       // Access the cookies from the response headers
       String? rawCookie = response.headers['set-cookie'];
 
-      // if (rawCookie != null) {
-      //   // Save the cookies locally
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-      //   await prefs.setString('cookie', rawCookie);
+      if (rawCookie != null) {
+        // Save the cookies locally
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('Identity', rawCookie);
 
-      //   // Print the stored cookie
-      //   String? storedCookie = prefs.getString('cookie');
-      //   if (storedCookie != null) {
-      //   } else {}
-      // }
-
-      // If the server did return a 200 OK response,
-      // you can parse the JSON response.
-      // var jsonResponse = json.decode(response.body);
-      // return jsonResponse;
+        // Print the stored cookie
+        String? storedCookie = prefs.getString('Identity');
+        if (storedCookie != null) {
+          print(storedCookie);
+        } else {
+          print(storedCookie);
+        }
+      }
+      return true;
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to log in.');
+      return false;
     }
   }
 
@@ -183,20 +180,26 @@ class _SignInState extends State<SignIn> {
                         width: double.infinity,
                         height: 50.h,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              validate = true;
-                              const snackBar = SnackBar(
+                              bool loginSuccessful = await LoginAccount(
+                                phoneController.text,
+                                passwordController.text,
+                              );
+
+                              if (loginSuccessful) {
+                                // Navigate to the home screen
+                                Navigator.pushNamed(context, '/home');
+                              } else {
+                                const snackBar = SnackBar(
                                   content: Text(
-                                'Sign In',
-                                style: TextStyle(color: Colors.white),
-                              ));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  snackBar); // Use ScaffoldMessenger
-                            }
-                            if (validate) {
-                              LoginAccount(phoneController.text,
-                                  passwordController.text);
+                                    'Failed to log in. Please check your credentials.',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             }
                           },
                           // style: ButtonStyle(elevation: MaterialStateProperty(12.0 )),

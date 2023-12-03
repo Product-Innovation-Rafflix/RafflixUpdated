@@ -62,6 +62,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: topBar(),
         backgroundColor: bgColor,
+        automaticallyImplyLeading: false,
       ),
       body: ListView(
         children: [

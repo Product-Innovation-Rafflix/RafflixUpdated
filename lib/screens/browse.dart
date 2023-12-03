@@ -20,7 +20,6 @@ class _BrowseState extends State<Browse> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: ListView(
         children: [
           Padding(

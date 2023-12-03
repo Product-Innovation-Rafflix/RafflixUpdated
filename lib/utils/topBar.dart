@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafflix/data.dart';
 import 'package:rafflix/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class topBar extends StatelessWidget {
-  String balance = "15";
+  String balance = theBalance.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -26,32 +27,30 @@ class topBar extends StatelessWidget {
                   Container(
                     height: 35.h,
                     decoration: BoxDecoration(
-                      color: primaryRed,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 5.w,
+                          width: 2.w,
                         ),
                         SizedBox(
                           height: 30.h,
                           width: 30.w,
                           child: Icon(
                             Icons.account_balance_wallet_rounded,
-                            color: Colors.white,
                           ),
                         ),
                         Text(
                           '$balance R',
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(
-                          width: 0.w,
+                          width: 5.w,
                         ),
                         GestureDetector(
                           onTap: () {

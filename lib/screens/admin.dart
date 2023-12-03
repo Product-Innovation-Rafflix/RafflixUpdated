@@ -7,6 +7,7 @@ class admin extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('AdminPage'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Container(

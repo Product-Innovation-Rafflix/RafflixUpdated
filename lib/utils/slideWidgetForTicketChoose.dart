@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'ticketWidget.dart';
 
@@ -40,6 +41,9 @@ class _SlideWidgetState extends State<SlideWidget> {
             },
             itemCount: widget.numberOfSlides,
           ),
+        ),
+        SizedBox(
+          height: 3.h,
         ),
         buildIndicator(),
       ],

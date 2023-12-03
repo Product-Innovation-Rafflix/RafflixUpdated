@@ -159,7 +159,11 @@ class _ShopState extends State<Shop> with SingleTickerProviderStateMixin {
         totalItemBoxHeight < maxHeight ? totalItemBoxHeight : maxHeight;
 
     return Scaffold(
-      appBar: AppBar(title: topBar()),
+      appBar: AppBar(
+        title: topBar(),
+        backgroundColor: bgColor,
+        automaticallyImplyLeading: false,
+      ),
       body: Column(
         children: [
           Expanded(

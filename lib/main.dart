@@ -13,6 +13,7 @@ import 'package:rafflix/controllers/auth_service.dart';
 import 'package:rafflix/screens/signUp.dart';
 import 'package:rafflix/screens/ticketChoose.dart';
 import 'package:rafflix/theme.dart';
+import 'package:rafflix/utils/getStoredCookie.dart';
 
 void main() {
   runApp(MyApp());
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
           ),
           home: AuthHandler(authFuture: _authFuture),
           routes: {
+            '/home': (context) => Home(),
             '/admin': (context) => admin(),
             '/tickets': (context) {
               final Map<String, dynamic>? args = ModalRoute.of(context)!
@@ -65,6 +67,7 @@ class _MyAppState extends State<MyApp> {
             },
             '/shop': (context) => Shop(),
             '/profile': (context) => Profile(),
+            '/signin': (context) => SignIn(),
             '/signup': (context) => SignUp(),
             '/reset': (context) => ResetPass(),
             '/create': (context) => CreateNewPassword(),
@@ -89,7 +92,7 @@ class AuthHandler extends StatelessWidget {
           return Scaffold(
             body: Center(
               child: SpinKitFadingCube(
-                color: Theme.of(context).primaryColor, // Change color as needed
+                color: Theme.of(context).primaryColor,
                 size: 50.0,
               ),
             ),
@@ -99,8 +102,14 @@ class AuthHandler extends StatelessWidget {
         } else {
           final isAuthenticated = snapshot.data;
 
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
+            if (isAuthenticated == true) {
+              Navigator.pushReplacementNamed(context, '/home');
+            }
+          });
+
           if (isAuthenticated == true) {
-            return Home();
+            return const SizedBox();
           } else {
             return FutureBuilder<bool>(
               future: Future.delayed(Duration(seconds: 2), () => false),
@@ -109,8 +118,7 @@ class AuthHandler extends StatelessWidget {
                   return Scaffold(
                     body: Center(
                       child: SpinKitFadingCube(
-                        color: Theme.of(context)
-                            .primaryColor, // Change color as needed
+                        color: Theme.of(context).primaryColor,
                         size: 50.0,
                       ),
                     ),
@@ -150,13 +158,19 @@ class AuthenticationScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Replace with the navigation to the sign-up screen
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SignUp()),
-                // );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUp()),
+                );
               },
               child: Text('Sign Up'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                var cookie = await getStoredCookie();
+                print(cookie);
+              },
+              child: Text('cookie'),
             ),
           ],
         ),

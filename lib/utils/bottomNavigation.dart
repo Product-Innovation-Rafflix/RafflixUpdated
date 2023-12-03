@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafflix/data.dart';
 import 'package:rafflix/theme.dart';
 // import 'package:rafflix/utils/GetStoredCookie.dart';
 
@@ -49,11 +50,12 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
             route: '/shop',
             isSelected: widget.currentIndex == 1,
           ),
-          GestureDetectorButton(
-            icon: Icons.currency_exchange_outlined,
-            route: '/admin',
-            isSelected: widget.currentIndex == 2,
-          ),
+          if (status == "seller")
+            GestureDetectorButton(
+              icon: Icons.currency_exchange_outlined,
+              route: '/admin',
+              isSelected: widget.currentIndex == 2,
+            ),
           GestureDetectorButton(
             icon: Icons.person_2_outlined,
             route: '/profile',
