@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafflix/data.dart';
 import 'package:rafflix/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 
 class topBar extends StatelessWidget {
   String balance = theBalance.toString();
@@ -97,8 +100,6 @@ class topBar extends StatelessWidget {
 
   void _showAddDialog(BuildContext context) {
     double dialogWidth = MediaQuery.of(context).size.width * 0.9;
-
-    // Create a TextEditingController
     TextEditingController textController = TextEditingController();
 
     showDialog(
@@ -141,7 +142,7 @@ class topBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: TextFormField(
-                    controller: textController, // Set the controller
+                    controller: textController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: 'Enter your gift text here',
@@ -156,13 +157,37 @@ class topBar extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                // Retrieve the entered value from the controller
                 String enteredValue = textController.text;
-                print("Entered value: $enteredValue");
-                Navigator.of(context).pop(); // Close the dialog
+                Map<String, dynamic> data = {
+                  "balancedo": true,
+                  "number": int.parse(enteredValue),
+                };
+                String requestBody = json.encode(data);
+                String url =
+                    'https://rafflixbackgroundsevice.onrender.com/balance';
+
+                http
+                    .post(Uri.parse(url),
+                        headers: <String, String>{
+                          'Content-Type': 'application/json',
+                          'Cookie': 'your-cookie-value',
+                        },
+                        body: requestBody)
+                    .then((http.Response response) {
+                  if (response.statusCode == 200) {
+                    var responseData = json.decode(response.body);
+                    var updatedBalance = responseData['balance'];
+                    print('Updated Balance: $updatedBalance');
+                    Navigator.of(context).pop();
+                  } else {
+                    print('Request failed with status: ${response.statusCode}');
+                  }
+                });
+
+                Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
-                backgroundColor: primaryRed,
+                backgroundColor: Colors.red, // Replace with your color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
