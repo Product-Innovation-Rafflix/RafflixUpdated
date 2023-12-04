@@ -6,10 +6,10 @@ import 'package:rafflix/data.dart';
 import 'package:rafflix/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:rafflix/utils/getStoredCookie.dart';
 
 class topBar extends StatelessWidget {
   String balance = theBalance.toString();
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -156,8 +156,10 @@ class topBar extends StatelessWidget {
           surfaceTintColor: Colors.white,
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 String enteredValue = textController.text;
+
+                String cookie = await getStoredCookie();
                 Map<String, dynamic> data = {
                   "balancedo": true,
                   "number": int.parse(enteredValue),
@@ -170,16 +172,18 @@ class topBar extends StatelessWidget {
                     .post(Uri.parse(url),
                         headers: <String, String>{
                           'Content-Type': 'application/json',
-                          'Cookie': 'your-cookie-value',
+                          'Cookie': cookie,
                         },
                         body: requestBody)
                     .then((http.Response response) {
                   if (response.statusCode == 200) {
                     var responseData = json.decode(response.body);
-                    var updatedBalance = responseData['balance'];
+                    var updatedBalance = (responseData['balance']);
+                    theBalance = (responseData['data']).toDouble();
                     print('Updated Balance: $updatedBalance');
                     Navigator.of(context).pop();
                   } else {
+                    print(response.body);
                     print('Request failed with status: ${response.statusCode}');
                   }
                 });

@@ -37,7 +37,7 @@ class AuthService {
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-
+        print(responseData);
         // Extract specific values from the response
         final balance = (responseData['data']['balance'] ?? 0).toDouble();
         final role = responseData['data']['role'] as String;
